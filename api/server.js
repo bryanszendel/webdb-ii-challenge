@@ -18,6 +18,17 @@ server.get('/cars', (req, res) => {
     })
 })
 
+server.post('/cars', (req, res) => {
+  const carData = req.body
+  db('cars').insert(carData)
+    .then(newCar => {
+      res.status(201).json({ message: 'Successfully created car.'})
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to create the car.'})
+    })
+})
+
 server.get('/cars/:id', (req, res) => {
   const { id } = req.params
   db('cars').where({ id }).first()
