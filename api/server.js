@@ -40,4 +40,18 @@ server.get('/cars/:id', (req, res) => {
     })
 })
 
+server.put('/cars/:id', (req, res) => {
+  const { id } = req.params
+  const changes = req.body
+  db('cars')
+    .where('id', id)
+    .update(changes)
+    .then(updated => {
+      res.status(200).json(updated)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 module.exports = server;
